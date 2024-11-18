@@ -1,0 +1,8 @@
+<h1>Hello, cap-velo</h1>
+<p>Here is the list of bikes</p>
+<div *ngIf="velos">
+  <div *ngFor="let velo of velos">
+    <h2>{{velo.nom}}</h2>
+    <p>{{velo.description}}</p>
+  </div>
+</div>
