@@ -1,0 +1,11 @@
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
+    <!-- Position Column -->
+    <ng-container matColumnDef="nom">
+        <th mat-header-cell matHeaderCellDef>Nom</th>
+        <td mat-cellmatCellDef="let element">{{element.nom}}</td>
+    </ng-container>
+
+    <tr mat-header-row matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-rowmatRowDef="let row; columns: displayedColumns;"></tr>
+</table>
