@@ -1,9 +1,9 @@
-import { Component, ViewChild } from '@angular/core';
+import {AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { VeloService } from '../../services/velo.service';
 import { VeloModel } from '../../models/velo.model';
-import { VeloComponent } from '../velo/velo.component';
+import { ChangeDetectorRef } from '@angular/core';
 
 
 @Component({
@@ -13,19 +13,20 @@ import { VeloComponent } from '../velo/velo.component';
   templateUrl: './table-test.component.html',
   styleUrl: './table-test.component.css'
 })
-export class TabletestComponent {
+export class TableTestComponent {
 
-  displayedColumns: string[] = ['nom'];
+  displayedColumns: string[] = ['nom','quantite','description'];
 
-  dataSource!: MatTableDataSource<VeloModel>;
+  /*dataSource!: MatTableDataSource<VeloModel>;*/
+  dataSource = new MatTableDataSource<VeloModel>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private readonly veloService: VeloService){}
+  constructor(private veloService: VeloService){}
 
   ngOnInit(): void {
     this.veloService.showAll().subscribe(value => {
+      console.log(value);
       this.dataSource = new MatTableDataSource<VeloModel>(value);
-      this.dataSource.paginator = this.paginator;
     });
   }
 }

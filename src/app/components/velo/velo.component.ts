@@ -1,16 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {VeloModel} from "../../models/velo.model";
 import {VeloService} from "../../services/velo.service";
+import {CommonModule} from "@angular/common";
 
 @Component({
   selector: 'app-velo',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './velo.component.html',
   styleUrl: './velo.component.css'
-})
-@Component({
-  selector: 'app-velo',
-  templateUrl: './velo.component.html',
-  styleUrls: ['./velo.component.css']
 })
 export class VeloComponent implements OnInit {
   velos: VeloModel[] | undefined;

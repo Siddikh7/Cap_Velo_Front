@@ -2,16 +2,19 @@
 import {HttpClient} from "@angular/common/http";
 import {VeloModel} from "../models/velo.model";
 import {catchError, Observable, throwError} from "rxjs";
+import { Injectable } from "@angular/core";
 
+@Injectable({
+  providedIn: 'root'
+})
 export class VeloService {
   API_URL : string = "http://localhost:8080";
   API_ENTITY_NAME : string = "velos";
 
-  constructor(private readonly http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
   create(veloModel: VeloModel) : Observable<VeloModel>{
-    return this.http.post<VeloModel>(`${this.API_URL}/${this.API_ENTITY_NAME}/`, veloModel)
+    return this.http.post<VeloModel>(`${this.API_URL}/${this.API_ENTITY_NAME}`, veloModel)
       .pipe(catchError(this.errorHandler));
     //le pipe sert à composer des opérateurs dans une chaine, il est utilisé pour appliquer l'opérateur catchError à l'Observable retourné par la méthode post, catchError permet de gérer les erreurs
   }
@@ -20,7 +23,7 @@ export class VeloService {
       .pipe(catchError(this.errorHandler));
   }
   showAll() : Observable<VeloModel[]>{
-    return this.http.get<VeloModel[]>(`${this.API_URL}/${this.API_ENTITY_NAME}/`)
+    return this.http.get<VeloModel[]>(`${this.API_URL}/${this.API_ENTITY_NAME}`)
       .pipe(catchError(this.errorHandler));
   }
   update(id:number, veloModel: VeloModel) : Observable<VeloModel>{
