@@ -15,7 +15,7 @@ import { ChangeDetectorRef } from '@angular/core';
 })
 export class TableTestComponent {
 
-  displayedColumns: string[] = ['nom','quantite','description'];
+  displayedColumns: string[] = ['nom','quantite','description','pointgeo'];
 
   /*dataSource!: MatTableDataSource<VeloModel>;*/
   dataSource = new MatTableDataSource<VeloModel>();
