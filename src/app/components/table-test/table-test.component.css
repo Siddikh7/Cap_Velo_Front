@@ -1,0 +1,42 @@
+.demo-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+  }
+  
+  .demo-table th {
+    background-color: #f5f5f5;
+    font-weight: bold;
+    text-align: left;
+    padding: 12px;
+    border-bottom: 2px solid #e0e0e0;
+  }
+  
+  .demo-table td {
+    padding: 12px;
+    border-bottom: 1px solid #e0e0e0;
+    text-align: left;
+  }
+  
+  .demo-table tr:hover {
+    background-color: #f9f9f9;
+  }
+  
+  .demo-table tr:nth-child(even) {
+    background-color: #fefefe;
+  }
+  
+  .demo-table tr:nth-child(odd) {
+    background-color: #ffffff;
+  }
+  
+  .demo-table td:first-child,
+  .demo-table th:first-child {
+    padding-left: 16px;
+  }
+  
+  .demo-table td:last-child,
+  .demo-table th:last-child {
+    padding-right: 16px;
+  }
+  
