@@ -1,42 +1,78 @@
+#table-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 90%;
+  margin: 20px auto;
+  overflow: hidden;
+}
+
+.table-title {
+  font-size: 24px;
+  color: #4CAF50;
+  margin-bottom: 15px;
+  font-family: 'Arial', sans-serif;
+  text-align: center;
+}
+
+.table-wrapper {
+  width: 100%;
+  border: 2px solid #adebb3;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  overflow: auto;
+  max-height: 500px;
+  background-color: white;
+}
+
 .demo-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 16px 0;
+  width: 100%;
+  border-collapse: collapse; 
+  border: 1px solid #ddd;
+}
+
+.demo-table th, 
+.demo-table td {
+  padding: 12px;
+  border: 1px solid #9d9d9d; 
+  font-family: 'Arial', sans-serif;
+}
+
+.demo-table th {
+  background-color: #adebb3;
+  color: #333;
+  font-weight: bold;
+}
+
+.demo-table tr:hover {
+  background-color: #f2f2f2;
+}
+
+.demo-table tr:last-child td {
+  border-bottom: 1px solid #ddd;
+}
+
+@media screen and (max-width: 768px) {
+  #table-container {
+      padding: 10px;
   }
-  
-  .demo-table th {
-    background-color: #f5f5f5;
-    font-weight: bold;
-    text-align: left;
-    padding: 12px;
-    border-bottom: 2px solid #e0e0e0;
+
+  .table-title {
+      font-size: 18px;
   }
-  
+
+  .table-wrapper {
+      max-height: 300px;
+  }
+
+  .demo-table th, 
   .demo-table td {
-    padding: 12px;
-    border-bottom: 1px solid #e0e0e0;
-    text-align: left;
+      font-size: 14px;
+      padding: 10px;
   }
-  
-  .demo-table tr:hover {
-    background-color: #f9f9f9;
-  }
-  
-  .demo-table tr:nth-child(even) {
-    background-color: #fefefe;
-  }
-  
-  .demo-table tr:nth-child(odd) {
-    background-color: #ffffff;
-  }
-  
-  .demo-table td:first-child,
-  .demo-table th:first-child {
-    padding-left: 16px;
-  }
-  
-  .demo-table td:last-child,
-  .demo-table th:last-child {
-    padding-right: 16px;
-  }
-  
+}

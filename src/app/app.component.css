@@ -1,0 +1,50 @@
+nav {
+    background-color: #adebb3;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    padding: 0 10px;
+    border-radius: 8px;
+    z-index: 10;
+    position: relative;
+}
+
+nav a {
+    display: inline-block;
+    color: #333;
+    font-weight: bold;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+    margin: 0 5px;
+    pointer-events: auto;
+
+}
+
+nav a:hover {
+    background-color: #9cd3a4;
+    color: #333;
+    transform: scale(1.05);
+}
+
+nav a.active {
+    background-color: #91c49a;
+    color: #ffffff;
+    font-weight: bold;
+    box-shadow: 0 0 5px #91c49a;
+}
+
+@media screen and (max-width: 768px) {
+    nav {
+        flex-wrap: wrap;
+    }
+
+    nav a {
+        padding: 10px 15px;
+        font-size: 14px;
+    }
+}

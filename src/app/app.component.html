@@ -1,6 +1,6 @@
 <nav>
-    <a routerLink="/velos">Vélos</a> |
-    <a routerLink="/reservations">Réservations</a> |
-    <a routerLink="/carte">Carte</a>
-  </nav>
-  <router-outlet></router-outlet>
+  <a (click)="navigate('/velos')">Vélos</a> |
+  <a (click)="navigate('/reservations')">Réservations</a> |
+  <a (click)="navigate('/carte')">Carte</a>
+</nav>
+<router-outlet></router-outlet>
