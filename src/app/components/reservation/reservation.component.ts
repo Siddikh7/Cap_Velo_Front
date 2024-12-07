@@ -1,24 +1,27 @@
-import {Component, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {
   MatCell,
   MatCellDef,
   MatColumnDef,
   MatHeaderCell,
   MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef, MatTable,
-  MatTableDataSource
+  MatTableDataSource, MatTableModule
 } from "@angular/material/table";
 import {VeloModel} from "../../models/velo.model";
-import {MatPaginator} from "@angular/material/paginator";
+import {MatPaginator, MatPaginatorModule} from "@angular/material/paginator";
 import {VeloService} from "../../services/velo.service";
 import {ReservationModel} from "../../models/reservation.model";
 import {ReservationService} from "../../services/reservation.service";
-import {MatAnchor, MatButton} from "@angular/material/button";
-import {MatDivider} from "@angular/material/divider";
+import {MatAnchor, MatButton, MatButtonModule} from "@angular/material/button";
+import {MatDivider, MatDividerModule} from "@angular/material/divider";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {CommonModule} from "@angular/common";
 
 @Component({
   selector: 'app-reservation',
   standalone: true,
   imports: [
+    CommonModule,
     MatAnchor,
     MatButton,
     MatCell,
@@ -31,19 +34,23 @@ import {MatDivider} from "@angular/material/divider";
     MatPaginator,
     MatRow,
     MatRowDef,
-    MatTable
+    MatTable,
+    MatTableModule,
+    MatPaginatorModule,
+    MatButtonModule,
+    MatDividerModule
   ],
   templateUrl: './reservation.component.html',
   styleUrl: './reservation.component.css'
 })
-export class ReservationComponent {
-  displayedColumns: string[] = ['utilisateur','velo','quantite', 'reservation'];
+export class ReservationComponent implements AfterViewInit, OnInit {
+  displayedColumns: string[] = ['utilisateurId','veloId','reservation','quantite', 'actions'];
 
-  dataSource!: MatTableDataSource<ReservationModel>;
+  dataSource = new MatTableDataSource<ReservationModel>();
   //dataSource = new MatTableDataSource<reserv>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private reservationService: ReservationService){}
+  constructor(private reservationService: ReservationService, private cdr: ChangeDetectorRef){}
 
   ngOnInit(): void {
     this.reservationService.showAll().subscribe(value => {
@@ -51,6 +58,10 @@ export class ReservationComponent {
       this.dataSource = new MatTableDataSource<ReservationModel>(value);
       this.dataSource.paginator = this.paginator;
     });
+  }
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
+    this.cdr.detectChanges();
   }
   onEdit(element: ReservationModel): void {
     console.log('modifier', element);

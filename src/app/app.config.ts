@@ -6,8 +6,9 @@ import {HttpClient, HttpClientModule, provideHttpClient} from "@angular/common/h
 import {VeloService} from "./services/velo.service";
 import {UtilisateurService} from "./services/utilisateur.service";
 import {ReservationService} from "./services/reservation.service";
-import {BrowserModule} from "@angular/platform-browser";
 import {AppComponent} from "./app.component";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import{CommonModule} from "@angular/common";
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -16,9 +17,6 @@ export const appConfig: ApplicationConfig = {
     VeloService,
     ReservationService,
     UtilisateurService,
-    BrowserModule,
-    HttpClientModule,
-    HttpClient,
-    AppComponent
+    {provide: BrowserAnimationsModule, useValue: BrowserAnimationsModule},
   ]
 };

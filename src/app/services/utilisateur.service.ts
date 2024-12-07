@@ -1,8 +1,11 @@
 import {HttpClient} from "@angular/common/http";
 import {catchError, Observable, throwError} from "rxjs";
 import {UtilisateurModel} from "../models/utilisateur.model";
+import {Injectable} from "@angular/core";
 
-
+@Injectable({
+  providedIn: 'root'
+})
 export class UtilisateurService{
   API_URL : string = "http://localhost:8080";
   API_ENTITY_NAME : string = "utilisateurs";
@@ -18,7 +21,7 @@ export class UtilisateurService{
       .pipe(catchError(this.errorHandler));
   }
   showAll() : Observable<UtilisateurModel[]>{
-    return this.http.get<UtilisateurModel[]>(`${this.API_URL}/${this.API_ENTITY_NAME}/`)
+    return this.http.get<UtilisateurModel[]>(`${this.API_URL}/${this.API_ENTITY_NAME}`)
       .pipe(catchError(this.errorHandler));
   }
   update(id:number, utilisateurModel: UtilisateurModel) : Observable<UtilisateurModel>{

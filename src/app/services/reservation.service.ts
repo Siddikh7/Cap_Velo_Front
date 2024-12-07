@@ -24,7 +24,7 @@ export class ReservationService {
   }
 
   showAll(): Observable<ReservationModel[]> {
-    return this.http.get<ReservationModel[]>(`${this.API_URL}/${this.API_ENTITY_NAME}/`)
+    return this.http.get<ReservationModel[]>(`${this.API_URL}/${this.API_ENTITY_NAME}`)
       .pipe(catchError(this.errorHandler));
   }
 
