@@ -25,11 +25,11 @@ export class UtilisateurService{
       .pipe(catchError(this.errorHandler));
   }
   update(id:number, utilisateurModel: UtilisateurModel) : Observable<UtilisateurModel>{
-    return this.http.put<UtilisateurModel>(`${this.API_URL}/${this.API_ENTITY_NAME}/?id=${id}`, utilisateurModel)
+    return this.http.put<UtilisateurModel>(`${this.API_URL}/${this.API_ENTITY_NAME}?id=${id}`, utilisateurModel)
       .pipe(catchError(this.errorHandler));
   }
   delete(id: number) : Observable<never>{
-    return this.http.delete<never>(`${this.API_URL}/${this.API_ENTITY_NAME}/${id}`)
+    return this.http.delete<never>(`${this.API_URL}/${this.API_ENTITY_NAME}?id=${id}`)
       .pipe(catchError(this.errorHandler));
   }
   private errorHandler(error: any): Observable<never> {

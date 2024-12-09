@@ -45,6 +45,20 @@ export class TableTestComponent implements AfterViewInit, OnInit {
   }
 
   onDelete(element: VeloModel): void {
-    console.log('modifier', element)
+    if(element.id){
+      if(confirm('vous voulez vraiment supprimer ce velo?')){
+        this.veloService.delete(element.id).subscribe({
+          next: () => {
+            console.log('suppression reussie');
+            this.dataSource.data = this.dataSource.data.filter(velo => velo.id != element.id);
+          },
+          error: (err) => {
+            console.error('erreur lors de la suppression',err);
+          }
+        })
+      }
+    }else{
+      console.log('l id de element nexiste pas', element);
+    }
   }
 }

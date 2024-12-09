@@ -27,11 +27,11 @@ export class VeloService {
       .pipe(catchError(this.errorHandler));
   }
   update(id:number, veloModel: VeloModel) : Observable<VeloModel>{
-    return this.http.put<VeloModel>(`${this.API_URL}/${this.API_ENTITY_NAME}/?id=${id}`, veloModel)
+    return this.http.put<VeloModel>(`${this.API_URL}/${this.API_ENTITY_NAME}?id=${id}`, veloModel)
       .pipe(catchError(this.errorHandler));
   }
   delete(id: number) : Observable<never>{
-    return this.http.delete<never>(`${this.API_URL}/${this.API_ENTITY_NAME}/${id}`)
+    return this.http.delete<never>(`${this.API_URL}/${this.API_ENTITY_NAME}?id=${id}`)
       .pipe(catchError(this.errorHandler));
   }
 
