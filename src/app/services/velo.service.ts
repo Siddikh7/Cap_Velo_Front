@@ -30,12 +30,13 @@ export class VeloService {
     return this.http.put<VeloModel>(`${this.API_URL}/${this.API_ENTITY_NAME}?id=${id}`, veloModel)
       .pipe(catchError(this.errorHandler));
   }
-  delete(id: number) : Observable<never>{
-    return this.http.delete<never>(`${this.API_URL}/${this.API_ENTITY_NAME}?id=${id}`)
+  delete(id: number) : Observable<any>{
+    console.log(`URL de suppression : ${this.API_URL}/${this.API_ENTITY_NAME}/${id}`);
+    return this.http.delete<any>(`${this.API_URL}/${this.API_ENTITY_NAME}/${id}`)
       .pipe(catchError(this.errorHandler));
   }
 
-  private errorHandler(error: any): Observable<never> {
+  private errorHandler(error: any): Observable<any> {
     console.error('y a un souci qlq part', error);
     return throwError(() => new Error('Erreur survenue lors de la requête'));
   }

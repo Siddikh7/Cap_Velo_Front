@@ -53,7 +53,7 @@ export class TableTestComponent implements AfterViewInit, OnInit {
             this.dataSource.data = this.dataSource.data.filter(velo => velo.id != element.id);
           },
           error: (err) => {
-            console.error('erreur lors de la suppression',err);
+            console.error('erreur lors de la suppression',err,'avec comme id', element.id);
           }
         })
       }

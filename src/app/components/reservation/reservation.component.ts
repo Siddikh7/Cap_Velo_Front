@@ -69,6 +69,6 @@ export class ReservationComponent implements AfterViewInit, OnInit {
   }
 
   onDelete(element: ReservationModel): void {
-    console.log('modifier', element)
+    console.log('supprimer', element)
   }
 }
