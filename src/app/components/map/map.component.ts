@@ -15,8 +15,8 @@ export class MapComponent implements OnInit {
   private markerClusterGroup!: L.MarkerClusterGroup;
 
   private customIcon = L.icon({
-    iconUrl: 'assets/pin.png', 
-    iconSize: [38, 38], 
+    iconUrl: 'assets/3059964.png', 
+    iconSize: [30, 30], 
     iconAnchor: [19, 38],
     popupAnchor: [0, -38]
   });
@@ -36,9 +36,9 @@ export class MapComponent implements OnInit {
         //Bon j'ai utilisé la maniere forte et ca marche
         html: `
         <div style="
-          background-color: #adebb3; 
-          color: #333; 
-          border: 3px solid #4CAF50; 
+          background-color: #212121; 
+          color: #ffffff; 
+          border: 3px solid #ffffff; 
           border-radius: 50%; 
           width: 30px; 
           height: 30px; 
@@ -84,7 +84,7 @@ export class MapComponent implements OnInit {
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
-      attribution: '© OpenStreetMap'
+      attribution: ''
     }).addTo(this.map);
   }
   

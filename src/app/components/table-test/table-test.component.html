@@ -1,6 +1,6 @@
 <div id="table-container">
   <h2 class="table-title">Les accroche-vélos de la Ville de Tours</h2>
-  <div class="table-wrapper">
+  <div [style.max-height.px]="containerHeight" style="overflow-y: auto;">
       <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
           <ng-container matColumnDef="nom">
               <th mat-header-cell *matHeaderCellDef>Nom</th>
@@ -22,5 +22,6 @@
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page"></mat-paginator>
   </div>
 </div>

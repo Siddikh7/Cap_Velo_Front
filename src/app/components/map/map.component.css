@@ -4,28 +4,27 @@
     align-items: center;
     justify-content: center;
     padding: 20px;
-    background-color: #f9f9f9;
+    background-color: #323232;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    
     max-width: 90%;
     margin: 20px auto;
-    overflow: hidden;
 }
 
 .map-title {
     font-size: 24px;
-    color: #4CAF50;
+    color: #57dbf3;
     margin-bottom: 15px;
-    font-family: 'Arial', sans-serif;
     text-align: center;
 }
 
 #map {
-    height: 500px;
+    height: 700px;
     width: 100%;
-    border: 2px solid #adebb3;
+    border: 2px solid #5ae5ea;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    
 }
 
  /* Jsp pq ca marche pas j'ai envie de chialer devant mon pc */

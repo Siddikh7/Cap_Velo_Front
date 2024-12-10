@@ -34,6 +34,13 @@ export class VeloService {
     return this.http.delete<never>(`${this.API_URL}/${this.API_ENTITY_NAME}/${id}`)
       .pipe(catchError(this.errorHandler));
   }
+  saveData(veloModel: VeloModel) : Observable<VeloModel>{
+    if(veloModel.id){
+      return this.update(veloModel.id, veloModel);
+    }else{
+      return this.create(veloModel);
+    }
+  }
 
   private errorHandler(error: any): Observable<never> {
     console.error('y a un souci qlq part', error);

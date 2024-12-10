@@ -1,7 +1,11 @@
-import {catchError, Observable, throwError} from "rxjs";
-import {HttpClient} from "@angular/common/http";
-import {ReservationModel} from "../models/reservation.model";
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { catchError, Observable, throwError } from "rxjs";
+import { ReservationModel } from "../models/reservation.model";
 
+@Injectable({
+  providedIn: 'root'
+})
 export class ReservationService {
   API_URL: string = "http://localhost:8080";
   API_ENTITY_NAME: string = "reservations";
