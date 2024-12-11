@@ -4,7 +4,7 @@ import {UtilisateurModel} from "../models/utilisateur.model";
 
 
 export class UtilisateurService{
-  API_URL : string = "http://localhost:8080";
+  API_URL : string = "http://localhost:8081";
   API_ENTITY_NAME : string = "utilisateurs";
 
   constructor(private http: HttpClient) {}

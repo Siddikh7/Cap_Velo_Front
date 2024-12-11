@@ -7,7 +7,7 @@ import { ReservationModel } from "../models/reservation.model";
   providedIn: 'root'
 })
 export class ReservationService {
-  API_URL: string = "http://localhost:8080";
+  API_URL: string = "http://localhost:8081";
   API_ENTITY_NAME: string = "reservations";
 
   constructor(private http: HttpClient) {}

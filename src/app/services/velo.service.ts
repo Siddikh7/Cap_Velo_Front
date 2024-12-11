@@ -8,7 +8,7 @@ import { Injectable } from "@angular/core";
   providedIn: 'root'
 })
 export class VeloService {
-  API_URL : string = "http://localhost:8080";
+  API_URL : string = "http://localhost:8081";
   API_ENTITY_NAME : string = "velos";
 
   constructor(private http: HttpClient) {}
