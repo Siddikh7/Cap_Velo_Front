@@ -8,12 +8,14 @@ import {MatDivider} from "@angular/material/divider";
 import {MatAnchor, MatButton} from "@angular/material/button";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {CommonModule} from "@angular/common";
+import {MatButtonToggle} from "@angular/material/button-toggle";
+import {Router} from "@angular/router";
 
 
 @Component({
   selector: 'app-tabletest',
   standalone: true,
-  imports: [CommonModule, MatTableModule, MatPaginatorModule, MatDivider, MatButton, MatAnchor],
+  imports: [CommonModule, MatTableModule, MatPaginatorModule, MatDivider, MatButton, MatAnchor, MatButtonToggle],
   templateUrl: './table-test.component.html',
   styleUrl: './table-test.component.css'
 })
@@ -26,7 +28,7 @@ export class TableTestComponent implements AfterViewInit, OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   pageSize = 5;
 
-  constructor(private veloService: VeloService, private cdr: ChangeDetectorRef){}
+  constructor(private veloService: VeloService, private cdr: ChangeDetectorRef, private router: Router){}
 
   ngOnInit(): void {
     this.veloService.showAll().subscribe(value => {
@@ -39,9 +41,18 @@ export class TableTestComponent implements AfterViewInit, OnInit {
     this.dataSource.paginator = this.paginator;
     this.cdr.detectChanges();
   }
+  // ngOnDestroy() {
+  //   // Désabonnement pour éviter une fuite de mémoire
+  //   this.veloService.unsubscribe();
+  //   console.log('Désabonné dans ngOnDestroy.');
+  // }
   onEdit(element: VeloModel): void {
     console.log('modifier', element);
     //flm
+  }
+
+  onAdd():void{
+    this.router.navigate(['formulaire_ajout']); // Redirige vers le composant formulaire
   }
 
   onDelete(element: VeloModel): void {
@@ -51,6 +62,8 @@ export class TableTestComponent implements AfterViewInit, OnInit {
           next: () => {
             console.log('suppression reussie');
             this.dataSource.data = this.dataSource.data.filter(velo => velo.id != element.id);
+            //ca serait bien que l'affichage se mette auto à jour sans rafraichir la page
+            //a chaque fois
           },
           error: (err) => {
             console.error('erreur lors de la suppression',err,'avec comme id', element.id);
