@@ -1,8 +1,49 @@
-.mat-toolbar {
-  display: flex;
-  justify-content: space-between;
+
+nav {
+    background-color: #212121;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.3);
+    padding: 0 10px;
+    border-radius: 1px;
+    z-index: 1100;
+    position: sticky;
+    top: 0px;
 }
 
-.spacer {
-  flex: 1;
+nav a {
+    display: inline-block;
+    color: #44e7e5;
+    font-weight: bold;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+    font-size: 20px;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+    margin: 0 5px;
+    pointer-events: auto;
+
+}
+
+nav a:hover {
+    background-color: #6cfcfc;
+    color: #212121;
+    transform: scale(1.05);
+}
+
+nav a.active {
+    background-color: #60fcfe;
+    color: #ffffff;
+    font-weight: bold;
+    box-shadow: 0 0 5px #60fcfe;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: auto;
+    padding: 10px;
 }

@@ -2,7 +2,7 @@ import { ApplicationConfig } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
-import {HttpClient, HttpClientModule, provideHttpClient} from "@angular/common/http";
+import {provideHttpClient} from "@angular/common/http";
 import {VeloService} from "./services/velo.service";
 import {UtilisateurService} from "./services/utilisateur.service";
 import {ReservationService} from "./services/reservation.service";
@@ -15,8 +15,5 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(),
     VeloService,
-    ReservationService,
-    UtilisateurService,
-    {provide: BrowserAnimationsModule, useValue: BrowserAnimationsModule},
   ]
 };

@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ViewChild, OnInit } from '@angular/core';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { VeloService } from '../../services/velo.service';
@@ -6,9 +6,8 @@ import { VeloModel } from '../../models/velo.model';
 import { ChangeDetectorRef } from '@angular/core';
 import {MatDivider} from "@angular/material/divider";
 import {MatAnchor, MatButton} from "@angular/material/button";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {CommonModule} from "@angular/common";
 import {MatButtonToggle} from "@angular/material/button-toggle";
+import {CommonModule} from "@angular/common";
 import {Router} from "@angular/router";
 
 
@@ -31,16 +30,21 @@ export class TableTestComponent implements AfterViewInit, OnInit {
   constructor(private veloService: VeloService, private cdr: ChangeDetectorRef, private router: Router){}
 
   ngOnInit(): void {
-    this.veloService.showAll().subscribe(value => {
-      console.log(value);
-      this.dataSource = new MatTableDataSource<VeloModel>(value);
-      this.dataSource.paginator = this.paginator;
+    this.loadVeloData();
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.cdr.detectChanges(); // Détecter les changements après l'initialisation du paginator pour résoudre l'erreur
+  }
+
+  loadVeloData() {
+    this.veloService.showAll().subscribe(data => {
+      this.dataSource.data = data;
+      this.cdr.detectChanges(); // Assurez-vous que les changements sont appliqués
     });
   }
-  ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
-    this.cdr.detectChanges();
-  }
+
   // ngOnDestroy() {
   //   // Désabonnement pour éviter une fuite de mémoire
   //   this.veloService.unsubscribe();
@@ -73,5 +77,12 @@ export class TableTestComponent implements AfterViewInit, OnInit {
     }else{
       console.log('l id de element nexiste pas', element);
     }
+  }
+
+  get containerHeight(): number {
+    const rowHeight = 55;  // Hauteur des lignes ajustée
+    const headerHeight = 60;  // Hauteur de l'entête ajustée
+    const paginatorHeight = 65;
+    return (this.dataSource.paginator?.pageSize ?? this.pageSize) * rowHeight + headerHeight + paginatorHeight;
   }
 }

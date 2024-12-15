@@ -1,33 +1,77 @@
-table {
+#table-container {
+  background-color: #323232;
+  border-radius: 5px;
+  max-width: 100%;
+  margin: 20px auto;
+  overflow: hidden;
+
+}
+.mat-elevation-z8.demo-table {
   width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #ddd;
 }
 
-th.mat-sort-header-sorted {
-  color: black;
+.table-title {
+  font-size: 24px;
+  color: #42e2e7;
+  margin-bottom: 15px;
+  text-align: center;
 }
 
-.mat-raised-button {
-  margin-right: 8px;
+.table-wrapper {
+  width: 100%;
+  border: 2px solid #60fcfe;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  overflow: auto;
+  max-height: 500px;
+  background-color: white;
 }
 
-
-section {
-  display: table;
+.demo-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #ddd;
 }
 
-.example-label {
-  display: table-cell;
-  font-size: 14px;
-  margin-left: 8px;
-  min-width: 120px;
+.demo-table th,
+.demo-table td {
+  padding: 12px;
+  border: 1px solid #9d9d9d;
+  font-family: 'Poppins', sans-serif;
 }
 
-.example-button-row {
-  display: table-cell;
-  max-width: 600px;
+.demo-table th {
+  background-color: #5de1ff;
+  color: #333;
+  font-weight: bold;
 }
 
-.example-button-row .mat-mdc-button-base {
-  margin: 8px 8px 8px 0;
+.demo-table tr:hover {
+  background-color: #f2f2f2;
 }
 
+.demo-table tr:last-child td {
+  border-bottom: 1px solid #ddd;
+}
+
+@media screen and (max-width: 768px) {
+  #table-container {
+      padding: 10px;
+  }
+
+  .table-title {
+      font-size: 18px ;
+  }
+
+  .table-wrapper {
+      max-height: 300px;
+  }
+
+  .demo-table th,
+  .demo-table td {
+      font-size: 14px;
+      padding: 10px;
+  }
+}

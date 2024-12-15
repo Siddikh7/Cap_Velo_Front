@@ -24,17 +24,17 @@ export class ReservationService {
   }
 
   showAll(): Observable<ReservationModel[]> {
-    return this.http.get<ReservationModel[]>(`${this.API_URL}/${this.API_ENTITY_NAME}`)
+    return this.http.get<ReservationModel[]>(`${this.API_URL}/${this.API_ENTITY_NAME}/`)
       .pipe(catchError(this.errorHandler));
   }
 
   update(idVelo: number, idUtilisateur : number, reservationModel: ReservationModel): Observable<ReservationModel> {
-    return this.http.put<ReservationModel>(`${this.API_URL}/${this.API_ENTITY_NAME}?utilisateurId=${idUtilisateur}&veloId=${idVelo}`, reservationModel)
+    return this.http.put<ReservationModel>(`${this.API_URL}/${this.API_ENTITY_NAME}/?utilisateurId=${idUtilisateur}&veloId=${idVelo}`, reservationModel)
       .pipe(catchError(this.errorHandler));
   }
 
   delete(idVelo: number, idUtilisateur : number): Observable<never> {
-    return this.http.delete<never>(`${this.API_URL}/${this.API_ENTITY_NAME}?utilisateurId=${idUtilisateur}&veloId=${idVelo}`)
+    return this.http.delete<never>(`${this.API_URL}/${this.API_ENTITY_NAME}/?utilisateurId=${idUtilisateur}&veloId=${idVelo}`)
       .pipe(catchError(this.errorHandler));
   }
 
