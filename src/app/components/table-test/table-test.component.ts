@@ -40,7 +40,9 @@ export class TableTestComponent implements AfterViewInit, OnInit {
 
   loadVeloData() {
     this.veloService.showAll().subscribe(data => {
-      this.dataSource.data = data;
+      this.dataSource = new MatTableDataSource<VeloModel>(data);
+      //this.dataSource.data = data;
+      this.dataSource.paginator = this.paginator;
       this.cdr.detectChanges(); // Assurez-vous que les changements sont appliqués
     });
   }
@@ -52,11 +54,11 @@ export class TableTestComponent implements AfterViewInit, OnInit {
   // }
   onEdit(element: VeloModel): void {
     console.log('modifier', element);
-    //flm
+    this.router.navigate(['form'], element.id ? {queryParams: {id: element.id}} : undefined);
   }
 
   onAdd():void{
-    this.router.navigate(['formulaire_ajout']); // Redirige vers le composant formulaire
+    this.router.navigate(['form']); // Redirige vers le composant formulaire
   }
 
   onDelete(element: VeloModel): void {

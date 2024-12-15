@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { VeloService } from '../../services/velo.service';
 import { CommonModule } from '@angular/common';
 import { VeloModel } from '../../models/velo.model';
@@ -23,38 +23,53 @@ import { VeloModel } from '../../models/velo.model';
 })
 export class FormComponent implements OnInit {
   form: FormGroup;
-  constructor(private fb: FormBuilder, private router: Router, private VeloService: VeloService) {
+  isEditMode: boolean = false;
+  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private VeloService: VeloService) {
     this.form = this.fb.group({
       id: [null],
       nom: ['', Validators.required],
       description: [''],
-      quantite: [0, [Validators.required, Validators.min(1)]]
+      quantite: [0, [Validators.required, Validators.min(1)]],
+      pointGeo: ['', Validators.required]
     });
-    
+
   }
 
   ngOnInit(): void {
     this.preloadEditData();
   }
-  
+
   preloadEditData() {
-    const editId = JSON.parse(localStorage.getItem('editVeloId') || 'null');
-    if (editId) {
-      this.VeloService.findById(editId).subscribe({
-        next: (velo: VeloModel) => this.form.patchValue(velo),
-        error: (err) => console.error('Failed to load vélo data', err)
-      });
-    }
+    this.route.paramMap.subscribe(params => {
+      const id = params.get('id');
+      if (id) {
+        this.isEditMode = true;
+        this.VeloService.findById(+id).subscribe({
+          next: (velo: VeloModel) => this.form.patchValue(velo),
+          error: (err: any) => console.error('Failed to load vélo data', err)
+        });
+      }
+    });
   }
+
+  // preloadEditData() {
+  //   const editId = JSON.parse(localStorage.getItem('editVeloId') || 'null');
+  //   if (editId) {
+  //     this.VeloService.findById(editId).subscribe({
+  //       next: (velo: VeloModel) => this.form.patchValue(velo),
+  //       error: (err) => console.error('Failed to load vélo data', err)
+  //     });
+  //   }
+  // }
 
   onSubmit(): void {
     if (this.form.valid) {
       const veloData: VeloModel = this.form.value;
-      if (veloData.id) {
+      if (this.isEditMode && veloData.id) {
         this.VeloService.update(veloData.id, veloData).subscribe({
           next: (response) => {
             console.log('Vélo mis à jour', response);
-            this.router.navigate(['/dashboard']); // Adaptez selon votre route
+            this.router.navigate(['/dashboard']);
           },
           error: (error) => {
             console.error('Erreur lors de la mise à jour du vélo', error);
@@ -65,7 +80,7 @@ export class FormComponent implements OnInit {
         this.VeloService.create(veloData).subscribe({
           next: (response) => {
             console.log('Nouveau vélo créé', response);
-            this.router.navigate(['/dashboard']); // Adaptez selon votre route
+            this.router.navigate(['/dashboard']);
           },
           error: (error) => {
             console.error('Erreur lors de la création du vélo', error);

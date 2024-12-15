@@ -1,26 +1,30 @@
 <div class="form-container">
     <h2 class="form-title">Formulaire de création/modification</h2>
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      
+
       <mat-form-field appearance="outline" class="form-field" >
         <mat-label class="word">Nom</mat-label>
         <input matInput formControlName="nom" placeholder="Entrer le nom" required>
       </mat-form-field>
-  
+
       <mat-form-field appearance="outline" class="form-field">
         <mat-label class="word">Description</mat-label>
         <textarea matInput formControlName="description" placeholder="Entrer la description"></textarea>
       </mat-form-field>
-  
+
       <mat-form-field appearance="outline" class="form-field">
         <mat-label class="word">Quantité</mat-label>
         <input matInput type="number" formControlName="quantite" placeholder="Entrer la quantité" required>
       </mat-form-field>
-  
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label class="word">Point Géographique</mat-label>
+        <input matInput formControlName="pointGeo" placeholder="Entrer le point géographique" required>
+      </mat-form-field>
+
       <div class="form-buttons">
         <button mat-raised-button class="save-button" type="button" (click)="onSubmit()">Sauvegarder</button>
         <button mat-raised-button class="back-button" type="button" (click)="onCancel()">Retour</button>
       </div>
     </form>
   </div>
-  

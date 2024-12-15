@@ -16,6 +16,7 @@ import {MatAnchor, MatButton, MatButtonModule} from "@angular/material/button";
 import {MatDivider, MatDividerModule} from "@angular/material/divider";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {CommonModule} from "@angular/common";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-reservation',
@@ -49,14 +50,19 @@ export class ReservationComponent implements AfterViewInit, OnInit {
   dataSource = new MatTableDataSource<ReservationModel>();
   //dataSource = new MatTableDataSource<reserv>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  pageSize = 5;
 
-  constructor(private reservationService: ReservationService, private cdr: ChangeDetectorRef){}
+  constructor(private reservationService: ReservationService, private cdr: ChangeDetectorRef, private router: Router){}
 
   ngOnInit(): void {
+    this.loadReservationData();
+  }
+  loadReservationData() {
     this.reservationService.showAll().subscribe(value => {
       console.log(value);
       this.dataSource = new MatTableDataSource<ReservationModel>(value);
       this.dataSource.paginator = this.paginator;
+      this.cdr.detectChanges()
     });
   }
   ngAfterViewInit(): void {
@@ -71,4 +77,14 @@ export class ReservationComponent implements AfterViewInit, OnInit {
   onDelete(element: ReservationModel): void {
     console.log('supprimer', element)
   }
+  onAdd():void{
+    this.router.navigate(['form']); // Redirige vers le composant formulaire
+  }
+  get containerHeight(): number {
+    const rowHeight = 55;  // Hauteur des lignes ajustée
+    const headerHeight = 60;  // Hauteur de l'entête ajustée
+    const paginatorHeight = 65;
+    return (this.dataSource.paginator?.pageSize ?? this.pageSize) * rowHeight + headerHeight + paginatorHeight;
+  }
+
 }
