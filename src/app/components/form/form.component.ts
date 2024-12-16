@@ -85,9 +85,21 @@ export class FormComponent implements OnInit {
       }
     } else {
       console.log('Mode édition n\'est pas activé, création d\'un nouveau vélo.');
-      // Ici, vous pouvez gérer la logique de création si nécessaire
+      // Logique de création d'un nouveau vélo
+      this.veloService.create(this.form.value).subscribe({
+        next: (response) => {
+          console.log('Nouveau vélo créé avec succès', response);
+          alert('Vélo créé avec succès.');
+          this.router.navigate(['/dashboard']); // Redirection après création
+        },
+        error: (error) => {
+          console.error('Erreur lors de la création du vélo', error);
+          alert('Erreur lors de la création du vélo.');
+        }
+      });
     }
   }
+  
 
   onCancel(): void {
     this.router.navigate(['/dashboard']);
