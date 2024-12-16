@@ -6,7 +6,7 @@
     background-color: #2e2e2e;
     box-shadow: 0px 2px 5px rgb(94, 93, 93);
     border-radius: 8px;
-    
+    color: white;
   }
   
   .form-title {
@@ -19,7 +19,7 @@
   .form-field {
     width: 100%;
     margin-bottom: 20px;
-    color:#2979FF
+    color:#ffffff
   }
   
   .form-buttons {
@@ -39,4 +39,36 @@
   .word {
     color: #60fcfe;
   }
-  
+ /* Styles spécifiques pour les champs de formulaire Angular Material */
+.mat-form-field-appearance-outline .mat-form-field-label {
+  color: white;  /* Couleur des labels en mode 'outline' */
+}
+
+input.mat-input-element,
+textarea.mat-input-element {
+  color: white;  /* Couleur du texte saisi dans les inputs et textareas */
+}
+
+/* Placeholder styles */
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: rgba(255, 255, 255, 0.6);
+  opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: rgba(255, 255, 255, 0.6);
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Assurez-vous que les labels flottants restent blancs même après interaction */
+.mat-form-field.mat-focused .mat-form-field-label {
+  color: white !important;
+}
+
+.mat-form-field.mat-focused input.mat-input-element,
+.mat-form-field.mat-focused textarea.mat-input-element {
+  border-color: white;
+}

@@ -1,44 +1,22 @@
+/* Conteneur principal */
 #table-container {
   background-color: #323232;
   border-radius: 5px;
-  max-width: 100%;
+  max-width: 90%;
   margin: 20px auto;
-  overflow: hidden;
-  
-}
-.mat-elevation-z8.demo-table {
-  width: 100%;
-  border-collapse: collapse; 
-  border: 1px solid #ddd;
+  overflow: hidden; /* Retirer les barres de défilement */
 }
 
-.table-title {
-  font-size: 24px;
-  color: #42e2e7;
-  margin-bottom: 15px;
-  text-align: center;
-}
-
-.table-wrapper {
-  width: 100%;
-  border: 2px solid #60fcfe;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-  overflow: auto;
-  max-height: 500px;
-  background-color: white;
-}
-
+/* Tableau et ajustements */
 .demo-table {
   width: 100%;
-  border-collapse: collapse; 
-  border: 1px solid #ddd;
+  border-collapse: collapse;
 }
 
-.demo-table th, 
+.demo-table th,
 .demo-table td {
   padding: 12px;
-  border: 1px solid #9d9d9d; 
+  border: 1px solid #9d9d9d;
   font-family: 'Poppins', sans-serif;
 }
 
@@ -52,24 +30,28 @@
   background-color: #f2f2f2;
 }
 
-.demo-table tr:last-child td {
-  border-bottom: 1px solid #ddd;
+/* Ajustement des boutons */
+.action-buttons {
+  display: flex;
+  gap: 10px; /* Ajoute de l'espace entre les boutons */
+  justify-content: center; /* Centre les boutons */
 }
 
+button {
+  min-width: 80px; /* Largeur minimale pour les boutons */
+}
+
+/* Media queries pour les petits écrans */
 @media screen and (max-width: 768px) {
   #table-container {
       padding: 10px;
   }
 
   .table-title {
-      font-size: 18px ;
+      font-size: 18px;
   }
 
-  .table-wrapper {
-      max-height: 300px;
-  }
-
-  .demo-table th, 
+  .demo-table th,
   .demo-table td {
       font-size: 14px;
       padding: 10px;

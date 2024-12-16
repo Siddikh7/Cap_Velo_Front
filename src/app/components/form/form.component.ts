@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { VeloService } from '../../services/velo.service';
 import { CommonModule } from '@angular/common';
 import { VeloModel } from '../../models/velo.model';
@@ -23,38 +23,57 @@ import { VeloModel } from '../../models/velo.model';
 })
 export class FormComponent implements OnInit {
   form: FormGroup;
-  constructor(private fb: FormBuilder, private router: Router, private VeloService: VeloService) {
+  isEditMode: boolean = false;
+
+  constructor(
+    private fb: FormBuilder, 
+    private router: Router, 
+    private route: ActivatedRoute, 
+    private veloService: VeloService
+  ) {
     this.form = this.fb.group({
       id: [null],
       nom: ['', Validators.required],
       description: [''],
-      quantite: [0, [Validators.required, Validators.min(1)]]
+      quantite: [0, [Validators.required, Validators.min(1)]],
+      pointGeo: ['', Validators.required]
     });
-    
   }
 
   ngOnInit(): void {
-    this.preloadEditData();
+    this.route.queryParamMap.subscribe(params => {
+      const id = params.get('id');
+      if (id) {
+        this.isEditMode = true;
+        const numericId = +id;  // Convertissez l'ID en nombre
+        console.log('id =', numericId);
+        this.form.patchValue({ id: numericId });  // Mettez à jour l'ID en utilisant patchValue
+        this.veloService.findById(numericId).subscribe({
+          next: (velo: VeloModel) => {
+            this.form.patchValue(velo);  // Mettez à jour le formulaire avec les données récupérées
+            console.log(velo)
+          },
+          error: (err: any) => console.error('Failed to load vélo data', err)
+        });
+      } else {
+        console.log('on met tout à null');
+        this.isEditMode = false;
+        this.form.reset();  // Réinitialisez le formulaire pour enlever toutes les données précédentes
+      }
+    });
   }
   
-  preloadEditData() {
-    const editId = JSON.parse(localStorage.getItem('editVeloId') || 'null');
-    if (editId) {
-      this.VeloService.findById(editId).subscribe({
-        next: (velo: VeloModel) => this.form.patchValue(velo),
-        error: (err) => console.error('Failed to load vélo data', err)
-      });
-    }
-  }
-
   onSubmit(): void {
-    if (this.form.valid) {
-      const veloData: VeloModel = this.form.value;
-      if (veloData.id) {
-        this.VeloService.update(veloData.id, veloData).subscribe({
+    console.log('Tentative de soumission du formulaire, Mode édition:', this.isEditMode, 'ID:', this.form.value.id);
+  
+    if (this.isEditMode) {
+      console.log('Mode édition est activé');
+      if (this.form.value.id) {
+        console.log('ID du vélo est présent:', this.form.value.id);
+        this.veloService.update(this.form.value.id, this.form.value).subscribe({
           next: (response) => {
-            console.log('Vélo mis à jour', response);
-            this.router.navigate(['/dashboard']); // Adaptez selon votre route
+            console.log('Vélo mis à jour avec succès', response);
+            this.router.navigate(['/dashboard']);
           },
           error: (error) => {
             console.error('Erreur lors de la mise à jour du vélo', error);
@@ -62,19 +81,11 @@ export class FormComponent implements OnInit {
           }
         });
       } else {
-        this.VeloService.create(veloData).subscribe({
-          next: (response) => {
-            console.log('Nouveau vélo créé', response);
-            this.router.navigate(['/dashboard']); // Adaptez selon votre route
-          },
-          error: (error) => {
-            console.error('Erreur lors de la création du vélo', error);
-            alert('Erreur lors de la création des données.');
-          }
-        });
+        console.error('L\'ID du vélo n\'est pas présent dans les données du formulaire');
       }
     } else {
-      alert('Veuillez remplir tous les champs obligatoires.');
+      console.log('Mode édition n\'est pas activé, création d\'un nouveau vélo.');
+      // Ici, vous pouvez gérer la logique de création si nécessaire
     }
   }
 

@@ -1,27 +1,35 @@
 <div id="table-container">
   <h2 class="table-title">Les accroche-vélos de la Ville de Tours</h2>
-  <div [style.max-height.px]="containerHeight" style="overflow-y: auto;">
-      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
-          <ng-container matColumnDef="nom">
-              <th mat-header-cell *matHeaderCellDef>Nom</th>
-              <td mat-cell *matCellDef="let element">{{element.nom}}</td>
-          </ng-container>
-          <ng-container matColumnDef="quantite">
-              <th mat-header-cell *matHeaderCellDef>Quantité</th>
-              <td mat-cell *matCellDef="let element">{{element.quantite}}</td>
-          </ng-container>
-          <ng-container matColumnDef="description">
-              <th mat-header-cell *matHeaderCellDef>Description</th>
-              <td mat-cell *matCellDef="let element">{{element.description}}</td>
-          </ng-container>
-          <ng-container matColumnDef="pointgeo">
-              <th mat-header-cell *matHeaderCellDef>Point Géographique</th>
-              <td mat-cell *matCellDef="let element">{{element.pointGeo}}</td>
-          </ng-container>
+  <div>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
+      <ng-container matColumnDef="nom">
+          <th mat-header-cell *matHeaderCellDef>Nom</th>
+          <td mat-cell *matCellDef="let element">{{element.nom}}</td>
+      </ng-container>
+      <ng-container matColumnDef="quantite">
+          <th mat-header-cell *matHeaderCellDef>Quantité</th>
+          <td mat-cell *matCellDef="let element">{{element.quantite}}</td>
+      </ng-container>
+      <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef>Description</th>
+          <td mat-cell *matCellDef="let element">{{element.description}}</td>
+      </ng-container>
+      <ng-container matColumnDef="pointgeo">
+          <th mat-header-cell *matHeaderCellDef>Point Géographique</th>
+          <td mat-cell *matCellDef="let element">{{element.pointGeo}}</td>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let element">
+          <div class="action-buttons">
+            <button mat-raised-button color="primary" (click)="onEdit(element)">Modifier</button>
+            <button mat-raised-button color="warn" (click)="onDelete(element)">Supprimer</button>
+          </div>
+        </td>
+      </ng-container>
 
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
-      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page"></mat-paginator>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page"></mat-paginator>
   </div>
-</div>

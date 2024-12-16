@@ -1,10 +1,11 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { catchError, Observable, throwError } from "rxjs";
-import { ReservationModel } from "../models/reservation.model";
+import {catchError, Observable, throwError} from "rxjs";
+import {HttpClient} from "@angular/common/http";
+import {ReservationModel} from "../models/reservation.model";
+import {HttpClientModule} from "@angular/common/http";
+import {Injectable} from "@angular/core";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class ReservationService {
   API_URL: string = "http://localhost:8080";
@@ -13,7 +14,7 @@ export class ReservationService {
   constructor(private http: HttpClient) {}
 
   create(reservationModel: ReservationModel): Observable<ReservationModel> {
-    return this.http.post<ReservationModel>(`${this.API_URL}/${this.API_ENTITY_NAME}/`, reservationModel)
+    return this.http.post<ReservationModel>(`${this.API_URL}/${this.API_ENTITY_NAME}`, reservationModel)
       .pipe(catchError(this.errorHandler));
   }
 
@@ -23,7 +24,7 @@ export class ReservationService {
   }
 
   showAll(): Observable<ReservationModel[]> {
-    return this.http.get<ReservationModel[]>(`${this.API_URL}/${this.API_ENTITY_NAME}/`)
+    return this.http.get<ReservationModel[]>(`${this.API_URL}/${this.API_ENTITY_NAME}`)
       .pipe(catchError(this.errorHandler));
   }
 

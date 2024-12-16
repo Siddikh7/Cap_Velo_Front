@@ -1,7 +1,11 @@
-import {HttpClient} from "@angular/common/http";
-import {catchError, Observable, throwError} from "rxjs";
-import {UtilisateurModel} from "../models/utilisateur.model";
+import { HttpClient } from "@angular/common/http";
+import { catchError, Observable, throwError } from "rxjs";
+import { UtilisateurModel } from "../models/utilisateur.model";
+import { Injectable } from "@angular/core";
 
+@Injectable({
+  providedIn: 'root' // Rend le service disponible globalement
+})
 
 export class UtilisateurService{
   API_URL : string = "http://localhost:8080";

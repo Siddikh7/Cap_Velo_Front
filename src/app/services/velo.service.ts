@@ -19,7 +19,7 @@ export class VeloService {
     //le pipe sert à composer des opérateurs dans une chaine, il est utilisé pour appliquer l'opérateur catchError à l'Observable retourné par la méthode post, catchError permet de gérer les erreurs
   }
   findById(id:number) :Observable<VeloModel>{
-    return this.http.get<VeloModel>(`${this.API_URL}/${this.API_ENTITY_NAME}`+`?id=${id}`)
+    return this.http.get<VeloModel>(`${this.API_URL}/${this.API_ENTITY_NAME}/${id}`)
       .pipe(catchError(this.errorHandler));
   }
   showAll() : Observable<VeloModel[]>{
@@ -27,11 +27,12 @@ export class VeloService {
       .pipe(catchError(this.errorHandler));
   }
   update(id:number, veloModel: VeloModel) : Observable<VeloModel>{
-    return this.http.put<VeloModel>(`${this.API_URL}/${this.API_ENTITY_NAME}/?id=${id}`, veloModel)
+    return this.http.put<VeloModel>(`${this.API_URL}/${this.API_ENTITY_NAME}?id=${id}`, veloModel)
       .pipe(catchError(this.errorHandler));
   }
-  delete(id: number) : Observable<never>{
-    return this.http.delete<never>(`${this.API_URL}/${this.API_ENTITY_NAME}/${id}`)
+  delete(id: number) : Observable<any>{
+    console.log(`URL de suppression : ${this.API_URL}/${this.API_ENTITY_NAME}/${id}`);
+    return this.http.delete<any>(`${this.API_URL}/${this.API_ENTITY_NAME}/${id}`)
       .pipe(catchError(this.errorHandler));
   }
   saveData(veloModel: VeloModel) : Observable<VeloModel>{
@@ -42,7 +43,7 @@ export class VeloService {
     }
   }
 
-  private errorHandler(error: any): Observable<never> {
+  private errorHandler(error: any): Observable<any> {
     console.error('y a un souci qlq part', error);
     return throwError(() => new Error('Erreur survenue lors de la requête'));
   }
