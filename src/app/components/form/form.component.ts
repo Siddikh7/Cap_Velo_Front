@@ -45,12 +45,12 @@ export class FormComponent implements OnInit {
       const id = params.get('id');
       if (id) {
         this.isEditMode = true;
-        const numericId = +id;  // Convertissez l'ID en nombre
+        const numericId = +id;  // Convertir l'ID en nombre
         console.log('id =', numericId);
-        this.form.patchValue({ id: numericId });  // Mettez à jour l'ID en utilisant patchValue
+        this.form.patchValue({ id: numericId });  
         this.veloService.findById(numericId).subscribe({
           next: (velo: VeloModel) => {
-            this.form.patchValue(velo);  // Mettez à jour le formulaire avec les données récupérées
+            this.form.patchValue(velo); 
             console.log(velo)
           },
           error: (err: any) => console.error('Failed to load vélo data', err)
@@ -58,7 +58,7 @@ export class FormComponent implements OnInit {
       } else {
         console.log('on met tout à null');
         this.isEditMode = false;
-        this.form.reset();  // Réinitialisez le formulaire pour enlever toutes les données précédentes
+        this.form.reset();  
       }
     });
   }
@@ -85,7 +85,7 @@ export class FormComponent implements OnInit {
       }
     } else {
       console.log('Mode édition n\'est pas activé, création d\'un nouveau vélo.');
-      // Logique de création d'un nouveau vélo
+      // création d'un nouveau vélo
       this.veloService.create(this.form.value).subscribe({
         next: (response) => {
           console.log('Nouveau vélo créé avec succès', response);
