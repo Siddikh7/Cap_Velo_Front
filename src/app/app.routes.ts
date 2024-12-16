@@ -1,6 +1,8 @@
 import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from "@angular/core";
 import {FormComponent} from "./components/form/form.component";
+import {AddReservationComponent} from "./components/add-reservation-component/add-reservation-component.component";
+import {LoginComponent} from "./components/login/login.component";
 
 export const routes: Routes = [
   { path: 'carte', loadComponent: () => import('./components/map/map.component').then(m => m.MapComponent) },
@@ -10,6 +12,8 @@ export const routes: Routes = [
   //{ path: '', redirectTo: '/carte', pathMatch: 'full' },
   //{ path: '**', redirectTo: '/carte' },
   {path: 'form/:id', loadComponent: () => import('./components/form/form.component').then(m => m.FormComponent) },
+  {path: 'add-reservation', component: AddReservationComponent},
+  {path: 'login', loadComponent: () => import('./components/login/login.component').then(m => m.LoginComponent) },
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:wght@400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #1a1819;
+  padding-top: 50px;
+}
+
+section {
+  background: #2b2b2b;
+  /*background-image: url(A.gif);*/
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  padding: 30px;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+}
+
+form .img {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+form h1 {
+  font-size: 2rem;
+  color: #ffffff;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.inputbox {
+  position: relative;
+  margin: 20px 0;
+  display: flex;
+  align-items: center;
+  background: #1e1e1e;
+  border: 1px solid #444;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.inputbox ion-icon {
+  color: #999;
+  font-size: 1.2rem;
+  margin-right: 10px;
+}
+
+.inputbox input {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-size: 1rem;
+}
+
+.inputbox input::placeholder {
+  color: #777;
+  font-size: 0.9rem;
+}
+
+button {
+  width: 100%;
+  background: #4caf50;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 12px 0;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background: #45a049;
+}
+
+.Register {
+  margin-top: 20px;
+}
+
+.Register p {
+  color: #aaa;
+}
+
+.Register a {
+  color: #4caf50;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.Register a:hover {
+  color: #45a049;
+  text-decoration: underline;
+}

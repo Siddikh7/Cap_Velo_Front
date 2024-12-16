@@ -1,21 +1,11 @@
-<!--test -->
-<mat-toolbar color="primary">
-  <span>Mon Application</span>
-  <span class="spacer"></span>
-  <a mat-button routerLink="/velos">Vélos</a>
-  <a mat-button routerLink="/reservations">Réservations</a>
-  <a mat-button routerLink="/velos">Carte</a>
-  <a mat-button routerLink="/velos">Formulaire</a>
-</mat-toolbar>
-<router-outlet></router-outlet>
-
 <div class="app-container">
     <nav>
     <img class="logo" src="assets/logo.png" alt="logo" width="40" height="40">
     <a (click)="navigate('/carte')">Carte</a> |
     <a (click)="navigate('/velos')">Vélos</a> |
     <a (click)="navigate('/reservations')">Réservations</a> |
-    <a (click)="navigate('/form')">Formulaire</a>
+    <a (click)="navigate('/form')">Formulaire</a> |
+      <a (click)="navigate('/login')">Login</a>
     </nav>
     <main>
     <router-outlet></router-outlet>

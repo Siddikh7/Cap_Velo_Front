@@ -14,7 +14,7 @@ export class ReservationService {
   constructor(private http: HttpClient) {}
 
   create(reservationModel: ReservationModel): Observable<ReservationModel> {
-    return this.http.post<ReservationModel>(`${this.API_URL}/${this.API_ENTITY_NAME}/`, reservationModel)
+    return this.http.post<ReservationModel>(`${this.API_URL}/${this.API_ENTITY_NAME}`, reservationModel)
       .pipe(catchError(this.errorHandler));
   }
 
