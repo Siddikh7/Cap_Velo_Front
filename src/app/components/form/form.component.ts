@@ -24,7 +24,13 @@ import { VeloModel } from '../../models/velo.model';
 export class FormComponent implements OnInit {
   form: FormGroup;
   isEditMode: boolean = false;
-  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private VeloService: VeloService) {
+
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private route: ActivatedRoute,
+    private veloService: VeloService
+  ) {
     this.form = this.fb.group({
       id: [null],
       nom: ['', Validators.required],
@@ -36,18 +42,24 @@ export class FormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.preloadEditData();
-  }
-
-  preloadEditData() {
-    this.route.paramMap.subscribe(params => {
+    this.route.queryParamMap.subscribe(params => {
       const id = params.get('id');
       if (id) {
         this.isEditMode = true;
-        this.VeloService.findById(+id).subscribe({
-          next: (velo: VeloModel) => this.form.patchValue(velo),
+        const numericId = +id;  // Convertir l'ID en nombre
+        console.log('id =', numericId);
+        this.form.patchValue({ id: numericId });
+        this.veloService.findById(numericId).subscribe({
+          next: (velo: VeloModel) => {
+            this.form.patchValue(velo);
+            console.log(velo)
+          },
           error: (err: any) => console.error('Failed to load vélo data', err)
         });
+      } else {
+        console.log('on met tout à null');
+        this.isEditMode = false;
+        this.form.reset();
       }
     });
   }
@@ -63,12 +75,15 @@ export class FormComponent implements OnInit {
   // }
 
   onSubmit(): void {
-    if (this.form.valid) {
-      const veloData: VeloModel = this.form.value;
-      if (this.isEditMode && veloData.id) {
-        this.VeloService.update(veloData.id, veloData).subscribe({
+    console.log('Tentative de soumission du formulaire, Mode édition:', this.isEditMode, 'ID:', this.form.value.id);
+
+    if (this.isEditMode) {
+      console.log('Mode édition est activé');
+      if (this.form.value.id) {
+        console.log('ID du vélo est présent:', this.form.value.id);
+        this.veloService.update(this.form.value.id, this.form.value).subscribe({
           next: (response) => {
-            console.log('Vélo mis à jour', response);
+            console.log('Vélo mis à jour avec succès', response);
             this.router.navigate(['/dashboard']);
           },
           error: (error) => {
@@ -77,21 +92,25 @@ export class FormComponent implements OnInit {
           }
         });
       } else {
-        this.VeloService.create(veloData).subscribe({
-          next: (response) => {
-            console.log('Nouveau vélo créé', response);
-            this.router.navigate(['/dashboard']);
-          },
-          error: (error) => {
-            console.error('Erreur lors de la création du vélo', error);
-            alert('Erreur lors de la création des données.');
-          }
-        });
+        console.error('L\'ID du vélo n\'est pas présent dans les données du formulaire');
       }
     } else {
-      alert('Veuillez remplir tous les champs obligatoires.');
+      console.log('Mode édition n\'est pas activé, création d\'un nouveau vélo.');
+      // création d'un nouveau vélo
+      this.veloService.create(this.form.value).subscribe({
+        next: (response) => {
+          console.log('Nouveau vélo créé avec succès', response);
+          alert('Vélo créé avec succès.');
+          this.router.navigate(['/dashboard']); // Redirection après création
+        },
+        error: (error) => {
+          console.error('Erreur lors de la création du vélo', error);
+          alert('Erreur lors de la création du vélo.');
+        }
+      });
     }
   }
+
 
   onCancel(): void {
     this.router.navigate(['/dashboard']);

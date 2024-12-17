@@ -14,6 +14,10 @@ export const routes: Routes = [
   {path: 'form/:id', loadComponent: () => import('./components/form/form.component').then(m => m.FormComponent) },
   {path: 'add-reservation', component: AddReservationComponent},
   {path: 'login', loadComponent: () => import('./components/login/login.component').then(m => m.LoginComponent) },
+  {path: 'form', loadComponent: () => import('./components/form/form.component').then(m => m.FormComponent) },
+  { path: '', redirectTo: '/carte', pathMatch: 'full' },
+  { path: '**', redirectTo: '/carte' },
+  {path: 'form/:id', loadComponent: () => import('./components/form/form.component').then(m => m.FormComponent) },
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

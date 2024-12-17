@@ -52,8 +52,15 @@
   background-color: #f2f2f2;
 }
 
-.demo-table tr:last-child td {
-  border-bottom: 1px solid #ddd;
+/* Ajustement des boutons */
+.action-buttons {
+  display: flex;
+  gap: 10px; /* Ajoute de l'espace entre les boutons */
+  justify-content: center; /* Centre les boutons */
+}
+
+button {
+  min-width: 80px; /* Largeur minimale pour les boutons */
 }
 
 @media screen and (max-width: 768px) {

@@ -19,7 +19,7 @@ export class VeloService {
     //le pipe sert à composer des opérateurs dans une chaine, il est utilisé pour appliquer l'opérateur catchError à l'Observable retourné par la méthode post, catchError permet de gérer les erreurs
   }
   findById(id:number) :Observable<VeloModel>{
-    return this.http.get<VeloModel>(`${this.API_URL}/${this.API_ENTITY_NAME}`+`?id=${id}`)
+    return this.http.get<VeloModel>(`${this.API_URL}/${this.API_ENTITY_NAME}/${id}`)
       .pipe(catchError(this.errorHandler));
   }
   showAll() : Observable<VeloModel[]>{

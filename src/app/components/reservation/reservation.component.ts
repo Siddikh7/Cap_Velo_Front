@@ -70,6 +70,7 @@ export class ReservationComponent implements AfterViewInit, OnInit {
 
   loadReservationData() {
     this.reservationService.showAll().subscribe(value => {
+      console.log(value);
       this.dataSource = new MatTableDataSource<ReservationModel>(value);
       this.dataSource.paginator = this.paginator;
       this.cdr.detectChanges();
@@ -101,6 +102,7 @@ export class ReservationComponent implements AfterViewInit, OnInit {
 
   onEdit(element: ReservationModel): void {
     console.log('modifier', element);
+    //flm
   }
 
   onDelete(element: ReservationModel): void {

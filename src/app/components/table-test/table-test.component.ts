@@ -24,8 +24,8 @@ export class TableTestComponent implements AfterViewInit, OnInit {
 
   /*dataSource!: MatTableDataSource<VeloModel>;*/
   dataSource = new MatTableDataSource<VeloModel>();
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
   pageSize = 5;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(private veloService: VeloService, private cdr: ChangeDetectorRef, private router: Router){}
 
@@ -54,7 +54,12 @@ export class TableTestComponent implements AfterViewInit, OnInit {
   // }
   onEdit(element: VeloModel): void {
     console.log('modifier', element);
-    this.router.navigate(['form'], element.id ? {queryParams: {id: element.id}} : undefined);
+    if (element.id) {
+      this.router.navigate(['form'], { queryParams: { id: element.id } });
+    } else {
+      // Handle the error or edge case where id is not available
+      console.error('Erreur: L\'ID du vélo est manquant');
+    }
   }
 
   onAdd():void{
