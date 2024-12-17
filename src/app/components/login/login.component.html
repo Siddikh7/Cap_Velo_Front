@@ -9,34 +9,40 @@
 
   </head>
 <body>
-  <section>
-    <form>
-      <div class="img Bike Logo">
-        <img src="logo.png" alt="Sign In Image" style="width: 30%; height: auto ; object-fit: cover;">
-      </div>
-      <h1>Sign In</h1>
-      <div class="inputbox">
-<!--        <ion-icon name="person-outline"></ion-icon>-->
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" placeholder="  Enter your name">
-      </div>
-      <div class="inputbox">
-<!--        <ion-icon name="mail-outline"></ion-icon>-->
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" placeholder="  Enter your email">
-      </div>
-      <div class="inputbox">
-<!--        <ion-icon name="lock-closed-outline"></ion-icon>-->
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" placeholder="  Enter your password">
-      </div>
-      <button>Sign Up</button>
-      <div class="Register">
-        <p>Already have an account? <a href="Login.html">Login</a></p>
-      </div>
-    </form>
-  </section>
+<section>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="img Bike Logo">
+      <img src="logo.png" alt="Sign In Image" style="width: 30%; height: auto; object-fit: cover;">
+    </div>
+    <h1 *ngIf="isLoginMode">Login</h1>
+    <h1 *ngIf="!isLoginMode">Sign Up</h1>
 
-
+    <div *ngIf="!isLoginMode" class="inputbox">
+      <label for="name">Nom:</label>
+      <input type="text" id="name" formControlName="name" placeholder="Enter your name">
+    </div>
+    <div *ngIf="!isLoginMode" class="inputbox">
+      <label for="surname">Prenom:</label>
+      <input type="text" id="surname" formControlName="surname" placeholder="Enter your surname">
+    </div>
+    <div *ngIf="!isLoginMode" class="inputbox">
+      <label for="username">Pseudo:</label>
+      <input type="text" id="username" formControlName="username" placeholder="Enter your username">
+    </div>
+    <div class="inputbox">
+      <label for="mail">Email:</label>
+      <input type="email" id="mail" formControlName="mail" placeholder="Enter your email">
+    </div>
+    <div class="inputbox">
+      <label for="password">Password:</label>
+      <input type="password" id="password" formControlName="password" placeholder="Enter your password">
+    </div>
+    <button type="submit">{{ isLoginMode ? 'Login' : 'Sign Up' }}</button>
+    <div class="Register">
+      <p *ngIf="isLoginMode">Don't have an account? <a (click)="toggleMode()">Sign Up</a></p>
+      <p *ngIf="!isLoginMode">Already have an account? <a (click)="toggleMode()">Login</a></p>
+    </div>
+  </form>
+</section>
 </body>
 </html>
