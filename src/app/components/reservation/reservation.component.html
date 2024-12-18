@@ -1,6 +1,15 @@
 <div id="reservation-container">
   <h2 class="reservation-title">Les réservations</h2>
   <button mat-raised-button color="primary" (click)="onAdd()">Ajouter</button>
+  <button mat-raised-button color="accent" (click)="toggleFilter()">Filter</button>
+  <div *ngIf="showFilter">
+    <mat-form-field appearance="outline">
+      <mat-label>Utilisateur</mat-label>
+      <mat-select [(value)]="selectedUserId" (selectionChange)="applyFilter()">
+        <mat-option *ngFor="let utilisateur of utilisateurs" [value]="utilisateur.id">{{ utilisateur.nom }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
   <div [style.max-height.px]="containerHeight" style="overflow-y: auto;">
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
       <!-- Position Column -->
@@ -29,7 +38,7 @@
         </td>
       </ng-container>
       <ng-container matColumnDef="reservation">
-        <th mat-header-cell *matHeaderCellDef>N de reservation </th>
+        <th mat-header-cell *matHeaderCellDef>Nombre de reservation </th>
         <td mat-cell *matCellDef="let element">{{element.reservation}}</td>
       </ng-container>
 

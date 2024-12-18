@@ -19,6 +19,9 @@ import {MatDivider, MatDividerModule} from "@angular/material/divider";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {CommonModule} from "@angular/common";
 import {Router} from "@angular/router";
+import {MatFormField} from "@angular/material/form-field";
+import {MatOption, MatSelect} from "@angular/material/select";
+import {MatFormFieldModule} from "@angular/material/form-field";
 
 @Component({
   selector: 'app-reservation',
@@ -41,7 +44,11 @@ import {Router} from "@angular/router";
     MatTableModule,
     MatPaginatorModule,
     MatButtonModule,
-    MatDividerModule
+    MatDividerModule,
+    MatFormField,
+    MatSelect,
+    MatOption,
+    MatFormFieldModule,
   ],
   templateUrl: './reservation.component.html',
   styleUrl: './reservation.component.css'
@@ -53,6 +60,8 @@ export class ReservationComponent implements AfterViewInit, OnInit {
   utilisateurs: UtilisateurModel[] = [];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   pageSize = 5;
+  showFilter = false;
+  selectedUserId: number | null = null;
 
   constructor(
     private reservationService: ReservationService,
@@ -101,16 +110,33 @@ export class ReservationComponent implements AfterViewInit, OnInit {
   }
 
   onEdit(element: ReservationModel): void {
-    console.log('modifier', element);
-    //flm
+    this.router.navigate(['add-reservation'], { queryParams: { veloId: element.veloId, utilisateurId: element.utilisateurId } });
   }
 
   onDelete(element: ReservationModel): void {
-    console.log('supprimer', element);
+    this.reservationService.delete(element.veloId, element.utilisateurId).subscribe({
+      next: () => {
+        console.log('suppression reussie');
+        this.dataSource.data = this.dataSource.data.filter(reservation => reservation.veloId !== element.veloId && reservation.utilisateurId !== element.utilisateurId);
+      },
+      error: (err) => {
+        console.error('erreur lors de la suppression', err, 'avec comme id', element.veloId);
+      }
+    });
   }
 
   onAdd(): void {
     this.router.navigate(['add-reservation']);
+  }
+  toggleFilter(): void {
+    this.showFilter = !this.showFilter;
+  }
+  applyFilter(): void {
+    if (this.selectedUserId) {
+      this.dataSource.data = this.dataSource.data.filter(reservation => reservation.utilisateurId === this.selectedUserId);
+    } else {
+      this.loadReservationData();
+    }
   }
 
   get containerHeight(): number {

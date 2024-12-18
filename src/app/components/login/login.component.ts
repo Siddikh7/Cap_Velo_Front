@@ -52,4 +52,11 @@ export class LoginComponent {
       }
     }
   }
+  // onSubmit(){
+  //   if(this.form.valid){
+  //     if(this.isLoginMode){
+  //       this.veloS
+  //     }
+  //   }
+  // }
 }

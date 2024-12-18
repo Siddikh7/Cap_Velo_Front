@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { VeloService } from '../../services/velo.service';
 import { ReservationService } from '../../services/reservation.service';
 import { UtilisateurService } from '../../services/utilisateur.service';
@@ -32,13 +32,15 @@ export class AddReservationComponent implements OnInit {
   form: FormGroup;
   velos: VeloModel[] = [];
   utilisateurs: UtilisateurModel[] = [];
+  isEditMode = false;
 
   constructor(
     private fb: FormBuilder,
     private veloService: VeloService,
     private reservationService: ReservationService,
     private utilisateurService: UtilisateurService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.form = this.fb.group({
       veloId: ['', Validators.required],
@@ -50,6 +52,14 @@ export class AddReservationComponent implements OnInit {
   ngOnInit(): void {
     this.loadVelos();
     this.loadUtilisateurs();
+    this.route.queryParams.subscribe(params => {
+      const veloId = params['veloId'];
+      const utilisateurId = params['utilisateurId'];
+      if (veloId && utilisateurId) {
+        this.isEditMode = true;
+        this.loadReservation(veloId, utilisateurId);
+      }
+    });
   }
 
   loadVelos(): void {
@@ -66,21 +76,42 @@ export class AddReservationComponent implements OnInit {
     });
   }
 
+  loadReservation(veloId: number, utilisateurId: number): void {
+    this.reservationService.findById(veloId, utilisateurId).subscribe({
+      next: (reservation) => this.form.patchValue(reservation),
+      error: (err) => console.error('Failed to load reservation', err)
+    });
+  }
+
   onSave(): void {
     if (this.form.valid) {
       const reservationData = this.form.value;
-      this.reservationService.create(reservationData).subscribe({
-        next: () => {
-          console.log('Reservation created');
-          this.router.navigate(['/reservations']);
-        },
-        error: (err: any) => {
-          console.error('Failed to create reservation', err);
-          alert('Erreur lors de la création de la réservation.');
-        }
-      });
+      if (this.isEditMode) {
+        this.reservationService.update(reservationData.veloId, reservationData.utilisateurId, reservationData).subscribe({
+          next: () => {
+            console.log('Reservation updated');
+            this.router.navigate(['/reservations']);
+          },
+          error: (err: any) => {
+            console.error('Failed to update reservation', err);
+            alert('Erreur lors de la mise à jour de la réservation.');
+          }
+        });
+      } else {
+        this.reservationService.create(reservationData).subscribe({
+          next: () => {
+            console.log('Reservation created');
+            this.router.navigate(['/reservations']);
+          },
+          error: (err: any) => {
+            console.error('Failed to create reservation', err);
+            alert('Erreur lors de la création de la réservation.');
+          }
+        });
+      }
     } else {
       alert('Veuillez sélectionner un vélo, un utilisateur et entrer un numéro de réservation.');
     }
   }
 }
+
