@@ -4,6 +4,10 @@ import {FormComponent} from "./components/form/form.component";
 import {AddReservationComponent} from "./components/add-reservation-component/add-reservation-component.component";
 import {LoginComponent} from "./components/login/login.component";
 
+
+/**
+ * Routes de l'application
+ */
 export const routes: Routes = [
   { path: 'carte', loadComponent: () => import('./components/map/map.component').then(m => m.MapComponent) },
   { path: 'velos', loadComponent: () => import('./components/table-test/table-test.component').then(m => m.TableTestComponent) },

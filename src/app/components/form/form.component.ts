@@ -3,11 +3,14 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
-import {ActivatedRoute, Router} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { VeloService } from '../../services/velo.service';
 import { CommonModule } from '@angular/common';
 import { VeloModel } from '../../models/velo.model';
 
+/**
+ * Composant pour le formulaire de gestion des vélos.
+ */
 @Component({
   selector: 'app-form',
   standalone: true,
@@ -38,7 +41,6 @@ export class FormComponent implements OnInit {
       quantite: [0, [Validators.required, Validators.min(1)]],
       pointGeo: ['', Validators.required]
     });
-
   }
 
   ngOnInit(): void {
@@ -52,7 +54,7 @@ export class FormComponent implements OnInit {
         this.veloService.findById(numericId).subscribe({
           next: (velo: VeloModel) => {
             this.form.patchValue(velo);
-            console.log(velo)
+            console.log(velo);
           },
           error: (err: any) => console.error('Failed to load vélo data', err)
         });
@@ -64,16 +66,9 @@ export class FormComponent implements OnInit {
     });
   }
 
-  // preloadEditData() {
-  //   const editId = JSON.parse(localStorage.getItem('editVeloId') || 'null');
-  //   if (editId) {
-  //     this.VeloService.findById(editId).subscribe({
-  //       next: (velo: VeloModel) => this.form.patchValue(velo),
-  //       error: (err) => console.error('Failed to load vélo data', err)
-  //     });
-  //   }
-  // }
-
+  /**
+   * Soumet le formulaire pour créer ou mettre à jour un vélo.
+   */
   onSubmit(): void {
     console.log('Tentative de soumission du formulaire, Mode édition:', this.isEditMode, 'ID:', this.form.value.id);
 
@@ -111,7 +106,9 @@ export class FormComponent implements OnInit {
     }
   }
 
-
+  /**
+   * Annule l'opération et retourne au tableau de bord.
+   */
   onCancel(): void {
     this.router.navigate(['/dashboard']);
   }

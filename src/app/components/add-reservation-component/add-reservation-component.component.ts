@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { VeloService } from '../../services/velo.service';
 import { ReservationService } from '../../services/reservation.service';
 import { UtilisateurService } from '../../services/utilisateur.service';
@@ -11,8 +11,11 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
-import {MatInputModule} from "@angular/material/input";
+import { MatInputModule } from '@angular/material/input';
 
+/**
+ * Composant pour ajouter ou créer une réservation.
+ */
 @Component({
   selector: 'app-add-reservation',
   standalone: true,
@@ -45,7 +48,7 @@ export class AddReservationComponent implements OnInit {
     this.form = this.fb.group({
       veloId: ['', Validators.required],
       utilisateurId: ['', Validators.required],
-      reservation: ['', Validators.required] // Add reservation field
+      reservation: ['', Validators.required]
     });
   }
 
@@ -62,6 +65,9 @@ export class AddReservationComponent implements OnInit {
     });
   }
 
+  /**
+   * Charge la liste des vélos disponibles.
+   */
   loadVelos(): void {
     this.veloService.showAll().subscribe({
       next: (data) => this.velos = data,
@@ -69,6 +75,9 @@ export class AddReservationComponent implements OnInit {
     });
   }
 
+  /**
+   * Charge la liste des utilisateurs.
+   */
   loadUtilisateurs(): void {
     this.utilisateurService.showAll().subscribe({
       next: (data) => this.utilisateurs = data,
@@ -76,6 +85,11 @@ export class AddReservationComponent implements OnInit {
     });
   }
 
+  /**
+   * Charge les détails d'une réservation pour l'édition.
+   * @param veloId L'ID du vélo.
+   * @param utilisateurId L'ID de l'utilisateur.
+   */
   loadReservation(veloId: number, utilisateurId: number): void {
     this.reservationService.findById(veloId, utilisateurId).subscribe({
       next: (reservation) => this.form.patchValue(reservation),
@@ -83,6 +97,9 @@ export class AddReservationComponent implements OnInit {
     });
   }
 
+  /**
+   * Sauvegarde la réservation (création ou mise à jour).
+   */
   onSave(): void {
     if (this.form.valid) {
       const reservationData = this.form.value;
@@ -114,4 +131,3 @@ export class AddReservationComponent implements OnInit {
     }
   }
 }
-

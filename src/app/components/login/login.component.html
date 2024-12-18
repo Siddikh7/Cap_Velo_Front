@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"> </script>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"> </script>
 
-  </head>
+</head>
 <body>
 <section>
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
@@ -18,29 +18,45 @@
     <h1 *ngIf="!isLoginMode">Sign Up</h1>
 
     <div *ngIf="!isLoginMode" class="inputbox">
-      <label for="name">Nom:</label>
-      <input type="text" id="name" formControlName="name" placeholder="Enter your name">
+      <label for="nom">Nom:</label>
+      <input type="text" id="nom" formControlName="nom" placeholder="Enter your name">
+      <div *ngIf="form.get('nom')?.invalid && form.get('nom')?.touched" class="error">
+        Nom est requis.
+      </div>
     </div>
     <div *ngIf="!isLoginMode" class="inputbox">
-      <label for="surname">Prenom:</label>
-      <input type="text" id="surname" formControlName="surname" placeholder="Enter your surname">
+      <label for="prenom">Prenom:</label>
+      <input type="text" id="prenom" formControlName="prenom" placeholder="Enter your surname">
+      <div *ngIf="form.get('prenom')?.invalid && form.get('prenom')?.touched" class="error">
+        Prenom est requis.
+      </div>
     </div>
     <div *ngIf="!isLoginMode" class="inputbox">
       <label for="username">Pseudo:</label>
       <input type="text" id="username" formControlName="username" placeholder="Enter your username">
+      <div *ngIf="form.get('username')?.invalid && form.get('username')?.touched" class="error">
+        Pseudo est requis.
+      </div>
     </div>
     <div class="inputbox">
       <label for="mail">Email:</label>
       <input type="email" id="mail" formControlName="mail" placeholder="Enter your email">
+      <div *ngIf="form.get('mail')?.invalid && form.get('mail')?.touched" class="error">
+        Email valide est requis.
+      </div>
     </div>
     <div class="inputbox">
       <label for="password">Password:</label>
       <input type="password" id="password" formControlName="password" placeholder="Enter your password">
+      <div *ngIf="form.get('password')?.invalid && form.get('password')?.touched" class="error">
+        Mot de passe est requis.
+      </div>
     </div>
+
     <button type="submit">{{ isLoginMode ? 'Login' : 'Sign Up' }}</button>
     <div class="Register">
-      <p *ngIf="isLoginMode">Don't have an account? <a (click)="toggleMode()">Sign Up</a></p>
-      <p *ngIf="!isLoginMode">Already have an account? <a (click)="toggleMode()">Login</a></p>
+      <p *ngIf="isLoginMode">Don't have an account? <a (click)="switchMode()">Sign Up</a></p>
+      <p *ngIf="!isLoginMode">Already have an account? <a (click)="switchMode()">Login</a></p>
     </div>
   </form>
 </section>

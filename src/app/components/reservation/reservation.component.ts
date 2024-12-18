@@ -1,118 +1,62 @@
-import {AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
-import {
-  MatCell,
-  MatCellDef,
-  MatColumnDef,
-  MatHeaderCell,
-  MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef, MatTable,
-  MatTableDataSource, MatTableModule
-} from "@angular/material/table";
-import {VeloModel} from "../../models/velo.model";
-import {MatPaginator, MatPaginatorModule} from "@angular/material/paginator";
-import {VeloService} from "../../services/velo.service";
-import {ReservationModel} from "../../models/reservation.model";
-import {ReservationService} from "../../services/reservation.service";
-import {UtilisateurService} from "../../services/utilisateur.service";
-import {UtilisateurModel} from "../../models/utilisateur.model";
-import {MatAnchor, MatButton, MatButtonModule} from "@angular/material/button";
-import {MatDivider, MatDividerModule} from "@angular/material/divider";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {CommonModule} from "@angular/common";
-import {Router} from "@angular/router";
-import {MatFormField} from "@angular/material/form-field";
-import {MatOption, MatSelect} from "@angular/material/select";
-import {MatFormFieldModule} from "@angular/material/form-field";
+import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
+import { ReservationService } from '../../services/reservation.service';
+import { ReservationModel } from '../../models/reservation.model';
 
+/**
+ * Composant pour gérer les réservations.
+ */
 @Component({
   selector: 'app-reservation',
   standalone: true,
-  imports: [
-    CommonModule,
-    MatAnchor,
-    MatButton,
-    MatCell,
-    MatCellDef,
-    MatColumnDef,
-    MatDivider,
-    MatHeaderCell,
-    MatHeaderRow,
-    MatHeaderRowDef,
-    MatPaginator,
-    MatRow,
-    MatRowDef,
-    MatTable,
-    MatTableModule,
-    MatPaginatorModule,
-    MatButtonModule,
-    MatDividerModule,
-    MatFormField,
-    MatSelect,
-    MatOption,
-    MatFormFieldModule,
-  ],
   templateUrl: './reservation.component.html',
-  styleUrl: './reservation.component.css'
+  styleUrls: ['./reservation.component.css']
 })
-export class ReservationComponent implements AfterViewInit, OnInit {
-  displayedColumns: string[] = ['utilisateurId','veloId','veloName','veloQuantite','reservation', 'actions'];
+export class ReservationComponent implements OnInit {
   dataSource = new MatTableDataSource<ReservationModel>();
-  velos: VeloModel[] = [];
-  utilisateurs: UtilisateurModel[] = [];
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  pageSize = 5;
+  displayedColumns: string[] = ['utilisateurId', 'veloId', 'veloName', 'veloQuantite', 'reservation', 'actions'];
   showFilter = false;
   selectedUserId: number | null = null;
+  utilisateurs: any[] = [];
+  pageSize = 10;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
+    private router: Router,
     private reservationService: ReservationService,
-    private veloService: VeloService,
-    private utilisateurService: UtilisateurService,
-    private cdr: ChangeDetectorRef,
-    private router: Router
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
     this.loadReservationData();
-    this.loadVelos();
-    this.loadUtilisateurs();
   }
 
-  loadReservationData() {
-    this.reservationService.showAll().subscribe(value => {
-      console.log(value);
-      this.dataSource = new MatTableDataSource<ReservationModel>(value);
+  /**
+   * Charge les données de réservation.
+   */
+  loadReservationData(): void {
+    this.reservationService.showAll().subscribe((data: ReservationModel[]) => {
+      this.dataSource.data = data;
       this.dataSource.paginator = this.paginator;
       this.cdr.detectChanges();
     });
   }
 
-  loadVelos(): void {
-    this.veloService.showAll().subscribe({
-      next: (data) => this.velos = data,
-      error: (err) => console.error('Failed to load vélos', err)
-    });
-  }
-
-  loadUtilisateurs(): void {
-    this.utilisateurService.showAll().subscribe({
-      next: (data) => this.utilisateurs = data,
-      error: (err) => console.error('Failed to load utilisateurs', err)
-    });
-  }
-  getVeloDetails(veloId: number): { nom: string, quantite: number } | undefined {
-    const velo = this.velos.find(velo => velo.id === veloId);
-    return velo ? { nom: velo.nom, quantite: velo.quantite } : undefined;
-  }
-
-  ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
-    this.cdr.detectChanges();
-  }
-
+  /**
+   * Navigue vers la page d'édition de réservation.
+   * @param element L'élément de réservation à éditer.
+   */
   onEdit(element: ReservationModel): void {
     this.router.navigate(['add-reservation'], { queryParams: { veloId: element.veloId, utilisateurId: element.utilisateurId } });
   }
 
+  /**
+   * Supprime une réservation.
+   * @param element L'élément de réservation à supprimer.
+   */
   onDelete(element: ReservationModel): void {
     this.reservationService.delete(element.veloId, element.utilisateurId).subscribe({
       next: () => {
@@ -125,12 +69,23 @@ export class ReservationComponent implements AfterViewInit, OnInit {
     });
   }
 
+  /**
+   * Navigue vers la page d'ajout de réservation.
+   */
   onAdd(): void {
     this.router.navigate(['add-reservation']);
   }
+
+  /**
+   * Affiche ou masque le filtre.
+   */
   toggleFilter(): void {
     this.showFilter = !this.showFilter;
   }
+
+  /**
+   * Applique le filtre de réservation par utilisateur.
+   */
   applyFilter(): void {
     if (this.selectedUserId) {
       this.dataSource.data = this.dataSource.data.filter(reservation => reservation.utilisateurId === this.selectedUserId);
@@ -139,6 +94,10 @@ export class ReservationComponent implements AfterViewInit, OnInit {
     }
   }
 
+  /**
+   * Calcule la hauteur du conteneur en fonction du nombre de lignes.
+   * @returns La hauteur du conteneur.
+   */
   get containerHeight(): number {
     const rowHeight = 55;
     const headerHeight = 60;
